@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="sv">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="En mötesplats för studenter på MDU som läser kursen ITE130.">
     <title>ITE130 på MDU | Studentliv och gemenskap</title>
     <style>
-
         /* MDU-inspirerad färgpalett och grundinställningar för hela sidan. */
         :root {
             color-scheme: light;
@@ -138,18 +138,15 @@
             padding: 5px 12px;
             border-radius: 999px;
             background: var(--mdu-orange);
-            color: var(--white);
             font-size: 0.8rem;
             font-weight: 800;
             letter-spacing: 0.08em;
             text-transform: uppercase;
         }
 
-        h1,
-        h2,
-        h3,
         p {
             margin-top: 0;
+
         }
 
         h1 {
@@ -225,6 +222,25 @@
             border-radius: 12px;
             background: var(--white);
             box-shadow: var(--shadow);
+        }
+
+        .story-card,
+        .git-fact {
+            transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease, background-color 180ms ease;
+        }
+
+        /* Kortens rörelse är begränsad till enheter med mus och utan rörelsereducering. */
+        @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+            .story-card:hover {
+                transform: translateY(-6px);
+                border-color: var(--mdu-orange);
+                box-shadow: 0 22px 44px rgb(54 39 25 / 16%);
+            }
+
+            .git-fact:hover {
+                transform: translateX(6px);
+                background: rgb(255 255 255 / 16%);
+            }
         }
 
         .quote-mark {
@@ -379,8 +395,13 @@
                 transition-duration: 0.01ms !important;
             }
         }
+        p.eyebrow {
+            color: white;
+        }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
+
 <body>
     <header class="site-header">
         <div class="container header-inner">
@@ -498,4 +519,5 @@
         </div>
     </footer>
 </body>
+
 </html>
