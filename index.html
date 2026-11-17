@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="En mötesplats för studenter på MDU som läser kursen ITE130.">
+    <title>ITE130 på MDU | Studentliv och gemenskap</title>
+    <style>
+
+        /* MDU-inspirerad färgpalett och grundinställningar för hela sidan. */
+        :root {
+            color-scheme: light;
+            --mdu-green: #00352d;
+            --mdu-dark-green: #002b24;
+            --mdu-orange: #d53e10;
+            --mdu-orange-hover: #b8330d;
+            --ink: #161616;
+            --muted: #514a43;
+            --paper: #fcf4eb;
+            --white: #fffdf9;
+            --border: #e8ded3;
+            --shadow: 0 16px 40px rgb(54 39 25 / 10%);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            background: var(--paper);
+            color: var(--ink);
+            font-family: Arial, Helvetica, sans-serif;
+            line-height: 1.6;
+        }
+
+        a {
+            color: inherit;
+        }
+
+        .container {
+            width: min(1120px, calc(100% - 40px));
+            margin-inline: auto;
+        }
+
+        /* Den gröna toppbaren följer MDU:s mörkgröna profilfärg. */
+        .site-header {
+            background: var(--mdu-green);
+            border-bottom: 1px solid var(--mdu-dark-green);
+        }
+
+        .header-inner {
+            min-height: 78px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+        }
+
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--paper);
+            font-size: 1.1rem;
+            font-weight: 800;
+            letter-spacing: 0.02em;
+            text-decoration: none;
+        }
+
+        .brand-mark {
+            display: grid;
+            width: 42px;
+            height: 42px;
+            place-items: center;
+            border-radius: 12px 12px 12px 3px;
+            background: var(--mdu-orange);
+            color: var(--white);
+            font-size: 1.25rem;
+            font-weight: 800;
+        }
+
+        .main-nav {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .main-nav a {
+            color: var(--paper);
+            font-size: 0.95rem;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .main-nav a:hover,
+        .main-nav a:focus-visible {
+            color: var(--mdu-orange);
+            text-decoration: underline;
+            text-underline-offset: 5px;
+        }
+
+        /* Hero-sektionen använder grönt med orange markeringar. */
+        .hero {
+            position: relative;
+            overflow: hidden;
+            padding: 84px 0 88px;
+            background: linear-gradient(118deg, var(--mdu-dark-green), var(--mdu-green));
+            color: var(--white);
+        }
+
+        .hero::after {
+            position: absolute;
+            top: -165px;
+            right: max(-100px, calc((100vw - 1300px) / 2));
+            width: 430px;
+            height: 430px;
+            border: 64px solid rgb(255 255 255 / 8%);
+            border-radius: 50%;
+            content: "";
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 720px;
+        }
+
+        .eyebrow {
+            display: inline-block;
+            margin: 0 0 16px;
+            padding: 5px 12px;
+            border-radius: 999px;
+            background: var(--mdu-orange);
+            color: var(--white);
+            font-size: 0.8rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        h1,
+        h2,
+        h3,
+        p {
+            margin-top: 0;
+        }
+
+        h1 {
+            max-width: 680px;
+            margin-bottom: 18px;
+            font-size: clamp(2.5rem, 6vw, 4.6rem);
+            letter-spacing: -0.045em;
+            line-height: 1.05;
+        }
+
+        .hero p {
+            max-width: 610px;
+            margin-bottom: 28px;
+            color: rgb(255 255 255 / 88%);
+            font-size: clamp(1.05rem, 2vw, 1.2rem);
+        }
+
+        .button {
+            display: inline-flex;
+            min-height: 48px;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 20px;
+            border-radius: 6px;
+            background: var(--mdu-orange);
+            color: var(--white);
+            font-weight: 800;
+            text-decoration: none;
+            transition: transform 160ms ease, background-color 160ms ease;
+        }
+
+        .button:hover,
+        .button:focus-visible {
+            transform: translateY(-2px);
+            background: var(--mdu-orange-hover);
+        }
+
+        .content-section {
+            padding: 72px 0;
+        }
+
+        .section-heading {
+            max-width: 670px;
+            margin-bottom: 32px;
+        }
+
+        .section-heading h2 {
+            margin-bottom: 10px;
+            color: var(--mdu-green);
+            font-size: clamp(1.9rem, 4vw, 2.6rem);
+            letter-spacing: -0.03em;
+            line-height: 1.15;
+        }
+
+        .section-heading p {
+            margin-bottom: 0;
+            color: var(--muted);
+        }
+
+        /* Berättelserna visas i kolumner på större skärmar. */
+        .story-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 20px;
+        }
+
+        .story-card {
+            display: flex;
+            min-height: 250px;
+            flex-direction: column;
+            padding: 26px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: var(--white);
+            box-shadow: var(--shadow);
+        }
+
+        .quote-mark {
+            margin-bottom: 8px;
+            color: var(--mdu-orange);
+            font-family: Georgia, serif;
+            font-size: 3rem;
+            font-weight: 700;
+            line-height: 0.8;
+        }
+
+        .story-card blockquote {
+            margin: 0 0 22px;
+            font-size: 1.04rem;
+        }
+
+        .story-card figcaption {
+            margin-top: auto;
+            color: var(--mdu-green);
+            font-weight: 800;
+        }
+
+        .story-card figcaption span {
+            display: block;
+            color: var(--muted);
+            font-size: 0.88rem;
+            font-weight: 400;
+        }
+
+        /* Git-faktan får en egen kontrasterande panel. */
+        .git-section {
+            padding: 0 0 76px;
+        }
+
+        .git-card {
+            display: grid;
+            grid-template-columns: 0.9fr 1.1fr;
+            gap: 36px;
+            padding: clamp(26px, 5vw, 48px);
+            border-radius: 16px;
+            background: var(--mdu-green);
+            color: var(--white);
+            box-shadow: var(--shadow);
+        }
+
+        .git-card h2 {
+            margin-bottom: 14px;
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            letter-spacing: -0.03em;
+            line-height: 1.15;
+        }
+
+        .git-card p {
+            margin-bottom: 0;
+            color: rgb(255 255 255 / 82%);
+        }
+
+        .git-facts {
+            display: grid;
+            align-content: center;
+            gap: 14px;
+        }
+
+        .git-fact {
+            padding: 16px 18px;
+            border-left: 4px solid var(--mdu-orange);
+            border-radius: 0 8px 8px 0;
+            background: rgb(255 255 255 / 9%);
+        }
+
+        .git-fact strong {
+            display: block;
+            margin-bottom: 3px;
+            color: var(--white);
+        }
+
+        .site-footer {
+            padding: 24px 0;
+            background: #f2e8dd;
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        .footer-inner {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 8px 24px;
+        }
+
+        .footer-inner p {
+            margin: 0;
+        }
+
+        /* Gör navigation, kort och faktapanel lättlästa även på mobil. */
+        @media (max-width: 760px) {
+            .header-inner {
+                min-height: 0;
+                align-items: flex-start;
+                flex-direction: column;
+                padding-block: 16px;
+            }
+
+            .main-nav {
+                gap: 12px 20px;
+            }
+
+            .hero {
+                padding: 64px 0 70px;
+            }
+
+            .story-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .story-card {
+                min-height: 0;
+            }
+
+            .git-card {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+
+            .content-section {
+                padding: 56px 0;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .container {
+                width: min(100% - 28px, 1120px);
+            }
+
+            .main-nav {
+                gap: 10px 16px;
+            }
+
+            .main-nav a {
+                font-size: 0.88rem;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            *,
+            *::before,
+            *::after {
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container header-inner">
+            <a class="brand" href="#start" aria-label="ITE130 på MDU, till startsidan">
+                <span class="brand-mark" aria-hidden="true">M</span>
+                <span>ITE130 <span aria-hidden="true">|</span> MDU</span>
+            </a>
+            <nav class="main-nav" aria-label="Huvudmeny">
+                <a href="#berattelser">Studenter berättar</a>
+                <a href="#git">Git i korthet</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero" id="start" aria-labelledby="hero-title">
+            <div class="container hero-content">
+                <p class="eyebrow">Studentliv · ITE130</p>
+                <h1 id="hero-title">Lär tillsammans. Skapa tillsammans.</h1>
+                <p>
+                    En mötesplats för dig som läser ITE130 på Mälardalens universitet.
+                    Här delar studenter erfarenheter, tips och nyfikenhet på det vi lär oss.
+                </p>
+                <a class="button" href="#berattelser">Möt studenterna</a>
+            </div>
+        </section>
+
+        <section class="content-section" id="berattelser" aria-labelledby="stories-title">
+            <div class="container">
+                <div class="section-heading">
+                    <p class="eyebrow">Våra röster</p>
+                    <h2 id="stories-title">Studenter berättar</h2>
+                    <p>
+                        Att plugga är olika för alla. Berättelserna nedan är exempeltexter
+                        om studentlivet på MDU – byt gärna ut dem mot studenternas egna ord.
+                    </p>
+                </div>
+
+                <div class="story-grid">
+                    <figure class="story-card">
+                        <div class="quote-mark" aria-hidden="true">“</div>
+                        <blockquote>
+                            Det bästa är när vi hjälps åt med en uppgift och plötsligt
+                            faller bitarna på plats. Man lär sig mycket av varandra.
+                        </blockquote>
+                        <figcaption>
+                            Exempelberättelse
+                            <span>Om gemenskap och lärande</span>
+                        </figcaption>
+                    </figure>
+
+                    <figure class="story-card">
+                        <div class="quote-mark" aria-hidden="true">“</div>
+                        <blockquote>
+                            Jag gillar att få testa idéer själv och sedan jämföra
+                            lösningar med kurskamrater. Det gör programmering roligare.
+                        </blockquote>
+                        <figcaption>
+                            Exempelberättelse
+                            <span>Om att lära genom att göra</span>
+                        </figcaption>
+                    </figure>
+
+                    <figure class="story-card">
+                        <div class="quote-mark" aria-hidden="true">“</div>
+                        <blockquote>
+                            Studentlivet handlar inte bara om föreläsningar. En paus
+                            och ett samtal med andra kan ge ny energi till plugget.
+                        </blockquote>
+                        <figcaption>
+                            Exempelberättelse
+                            <span>Om vardagen på campus</span>
+                        </figcaption>
+                    </figure>
+                </div>
+            </div>
+        </section>
+
+        <section class="git-section" id="git" aria-labelledby="git-title">
+            <div class="container">
+                <div class="git-card">
+                    <div>
+                        <p class="eyebrow">Faktaruta</p>
+                        <h2 id="git-title">Vad är Git?</h2>
+                        <p>
+                            Git är ett versionshanteringssystem som hjälper dig att
+                            hålla ordning på ändringar i kod och andra filer. Det är
+                            användbart både när du arbetar själv och tillsammans med
+                            en grupp.
+                        </p>
+                    </div>
+                    <div class="git-facts">
+                        <div class="git-fact">
+                            <strong>Historik</strong>
+                            Spara ändringar som commits och se hur projektet har utvecklats.
+                        </div>
+                        <div class="git-fact">
+                            <strong>Parallellt arbete</strong>
+                            Skapa branches för att prova nya idéer utan att ändra huvudversionen.
+                        </div>
+                        <div class="git-fact">
+                            <strong>Samarbete</strong>
+                            Dela och sammanfoga ändringar med verktyg som GitHub eller GitLab.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <p>En studentsida för ITE130 på Mälardalens universitet.</p>
+            <p>Studentprojekt – inte en officiell MDU-webbplats.</p>
+        </div>
+    </footer>
+</body>
+</html>
